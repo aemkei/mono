@@ -16,8 +16,9 @@ setInterval(function () {
 
     for (x = 42; x--;){
 
+      H = 0;
 
-      for (H = i = 0; i < 8; i++){
+      for (i = 8; i--;){
 
         d=c.getImageData(x*2, y*4, 2, 4).data[i * 4]
 
