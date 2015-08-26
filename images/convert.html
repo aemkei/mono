@@ -1,59 +1,53 @@
 <pre id=p>
 <canvas id=c>
-
 <script>
   c = c.getContext('2d');
-  img = new Image();
+  M = new Image
 
-  braille = [
-    0x8,  0x1,
-    0x10, 0x2,
-    0x20, 0x4,
-    0x80, 0x40
-  ]
+  M.src = "data:image/webp;base64,UklGRvQAAABXRUJQVlA4IOgAAACwCwCdASpVAJAAP83g6Wy/trGsp7O7U/A5iWkAAKcTjmQYh5UJQ0jYpMX0oL/BEs/Nf1sjIFKDnW6C0eVxBnhAYsV2qJD7jkqjxCBZjU7VBrL4wUySIvuVqQeMIvT4oyrkLrEn3+AA/uNARvC7AcSDL17nlxal+g714Zb0pP35maC4uSRnedwCuSEyeFdXZCwMAM25RrBr71HxYgUvGf5S3SHZiXPiCN7Uqji/ddVr8ZmLB+yaJ3jSlUklLq55pEKPWuMRgz3Ri4eYScvXAHEM/dP1n+A/7ciOK0Sic5URg+KDXjMmQAAA";
 
-  r = "";
+  w = c.width = M.width;
+  h = c.height = M.height;
 
-  img.onload = function() {
+  console.log(c.width, M.width)
 
-    w = c.width = img.width;
-    h = c.height = img.height;
+  c.drawImage(M, 0, 0);
 
-    c.drawImage(img, 0, 0);
+  I = 0;
+  X = 97;
 
-    I = 0;
-    X = 97;
+  setInterval(function () {
+    r = "";
 
-    setInterval(function () {
-      r = "";
+    for (y=0; y<h; y+=4){
 
-      for (y=0; y<h; y+=4){
+      for (x=0; x<w; x+=2){
 
-        for (x=0; x<w; x+=2){
+        D = c.getImageData(x, y, 2, 4).data;
 
-          data = c.getImageData(x, y, 2, 4).data;
+        H = 0;
 
-          hex = 0;
-
-          for (var i=0; i < 8; i++){
-            if (data[i*4] < I % 73){
-              hex += braille[i];
-            }
-            I += data[i*4]
+        for (i=0; i < 8; i++){
+          if (D[i*4] < I % 73){
+            H += [
+              0x8,  0x1,
+              0x10, 0x2,
+              0x20, 0x4,
+              0x80, 0x40
+            ][i];
           }
-
-          r += String.fromCharCode(0x2800 + hex);
-
+          I += D[i*4]
         }
 
-        r += "\n";
+        r += String.fromCharCode(0x2800 + H);
 
       }
 
-      p.innerHTML = r;
-    }, 1)
+      r += "\n";
 
-  }
+    }
 
-  img.src = "in-grey.webp";
+    p.innerHTML = r;
+  }, 1)
+
 </script>
