@@ -1,0 +1,59 @@
+<pre id=p>
+<canvas id=c>
+
+<script>
+  c = c.getContext('2d');
+  img = new Image();
+
+  braille = [
+    0x8,  0x1,
+    0x10, 0x2,
+    0x20, 0x4,
+    0x80, 0x40
+  ]
+
+  r = "";
+
+  img.onload = function() {
+
+    w = c.width = img.width;
+    h = c.height = img.height;
+
+    c.drawImage(img, 0, 0);
+
+    I = 0;
+    X = 97;
+
+    setInterval(function () {
+      r = "";
+
+      for (y=0; y<h; y+=4){
+
+        for (x=0; x<w; x+=2){
+
+          data = c.getImageData(x, y, 2, 4).data;
+
+          hex = 0;
+
+          for (var i=0; i < 8; i++){
+            if (data[i*4] < I % 73){
+              hex += braille[i];
+            }
+            I += data[i*4]
+          }
+
+          r += String.fromCharCode(0x2800 + hex);
+
+        }
+
+        r += "\n";
+
+      }
+
+      p.innerHTML = r;
+    }, 1)
+
+  }
+
+  img.src = "in-grey.webp";
+</script>
