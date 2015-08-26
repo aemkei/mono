@@ -1,0 +1,1 @@
+watchy -w ./ -i 'min.js' -s -- bash -c 'cat main.js | uglifyjs -c > min.js; wc -c min.js; cat min.js'
