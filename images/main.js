@@ -12,21 +12,23 @@ I = 0;
 setInterval(function () {
   r = "";
 
-  for (y = 0; y < 144; y += 4){
+  for (y = 36; y--;){
 
-    for (x = 0; x < 85; x += 2){
+    for (x = 42; x--;){
 
-      D = c.getImageData(x, y, 2, 4).data;
+
       for (H = i = 0; i < 8; i++){
-        if (D[i * 4] < I % 73){
-          H += [
+
+        d=c.getImageData(x*2, y*4, 2, 4).data[i * 4]
+
+          H += (d < I % 85) && [
             0x8,  0x1,
             0x10, 0x2,
             0x20, 0x4,
             0x80, 0x40
           ][i];
-        }
-        I += D[i*4]
+
+        I += d
       }
 
       r += String.fromCharCode(0x2800 + H);
@@ -35,4 +37,4 @@ setInterval(function () {
   }
 
   p.innerHTML = r;
-}, 1)
+})
