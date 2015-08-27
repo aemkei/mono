@@ -1,1 +1,1 @@
-convert original.jpg  -quality 1 -resize 8%x9% -grayscale Rec709Luminance in-grey.webp
+convert original.jpg -level 0%,100%,0.8 -quality 1 -resize 8%x9% -grayscale Rec709Luminance trys/in-grey.webp
