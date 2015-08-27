@@ -1,1 +1,1 @@
-watchy -w ./ -i 'min.js' -s -- bash -c 'cat main.js | uglifyjs -c > min.js; wc -c min.js; cat min.js'
+watchy -w ./ -i 'min-combined' -s -- bash -c 'cat trys/in-grey.webp min.html > min-combined.html; wc -c min-combined.html'
